@@ -22,6 +22,8 @@ const static std::vector<std::pair<std::string,std::string>> detect_rules {
 struct Detect {
 public:
     explicit Detect(DetectType dt) : type_(dt) {};
+    
+    Detect() : type_(DetectType::NONE) {}
 
     DetectType type_ = DetectType::NONE;
 
