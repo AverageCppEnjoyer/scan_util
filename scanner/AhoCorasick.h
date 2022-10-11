@@ -65,6 +65,23 @@ private:
         }
         current_state = &root;
     }
+    
+     //return index of word if pattern matches,std::nullopt otherwise
+    std::optional<int32_t> CheckCurrentState() const
+    {
+        std::optional<int32_t> result = std::nullopt;
+
+        if (current_state->IsTerminal()) {
+            result.emplace(current_state->word_index_);
+        }
+
+        BorNode* temp_node = current_state->closest_term_;
+        if(temp_node) {
+            result.emplace(current_state->closest_term_->word_index_);
+        }
+
+        return result;
+    }
 
 public:
     //add string to trie
@@ -115,24 +132,7 @@ public:
             }
         }
     }
-
-    //return index of word if pattern matches,std::nullopt otherwise
-    std::optional<int32_t> CheckCurrentState() const
-    {
-        std::optional<int32_t> result = std::nullopt;
-
-        if (current_state->IsTerminal()) {
-            result.emplace(current_state->word_index_);
-        }
-
-        BorNode* temp_node = current_state->closest_term_;
-        if(temp_node) {
-            result.emplace(current_state->closest_term_->word_index_);
-        }
-
-        return result;
-    }
-
+    
     //search before first match with pattern or text end
     std::optional<int32_t> Search(const std::string& text)
     {
